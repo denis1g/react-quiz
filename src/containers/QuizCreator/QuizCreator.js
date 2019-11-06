@@ -5,6 +5,7 @@ import {createControl, validate, validateForm} from "../../form/formFramework";
 import Input from "../../components/UI/Input/Input";
 import Auxiliary from "../../hoc/Auxiliary/Auxiliary";
 import Select from "../../components/UI/Select/Select";
+import axios from 'axios';
 
 function createOptionControl(number) {
 	return createControl({
@@ -47,8 +48,10 @@ export default class QuizCreator extends Component {
 		const quiz = this.state.quiz.concat()
 		const index = quiz.length + 1;
 		
-		const {question, option1,
-			option2, option3, option4} = this.state.formControls;
+		const {
+			question, option1,
+			option2, option3, option4
+		} = this.state.formControls;
 		
 		const questionItem = {
 			question: question.value,
@@ -60,8 +63,8 @@ export default class QuizCreator extends Component {
 				{text: option3.value, id: option3.id},
 				{text: option4.value, id: option4.id}
 			]
-		}
-		quiz.push(questionItem)
+		};
+		quiz.push(questionItem);
 		
 		this.setState({
 			quiz,
@@ -71,15 +74,28 @@ export default class QuizCreator extends Component {
 		})
 	};
 	
-	createQuizHandler = event => {
+	createQuizHandler = async event => {
 		event.preventDefault();
 		
-		console.log(this.state.quiz)
+		try {
+			await axios.post('https://react-quiz-5238b.firebaseio.com/quizes.json',
+				this.state.quiz);
+			
+			this.setState({
+				quiz: [],
+				isFormValid: false,
+				rightAnswerId: 1,
+				formControls: createFormControls()
+			})
+			
+		} catch (e) {
+			console.log(e);
+		}
 	};
 	
 	changeHandler = (value, controlName) => {
-		const formControls = { ...this.state.formControls};
-		const control = { ...formControls[controlName]};
+		const formControls = {...this.state.formControls};
+		const control = {...formControls[controlName]};
 		
 		control.touched = true;
 		control.value = value;
@@ -109,7 +125,7 @@ export default class QuizCreator extends Component {
 						onChange={event =>
 							this.changeHandler(event.target.value, controlName)}
 					/>
-					 { index === 0 ? <hr/> : null}
+					{index === 0 ? <hr/> : null}
 				</Auxiliary>
 			)
 		})
