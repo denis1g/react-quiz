@@ -4,6 +4,8 @@ import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import is from 'is_js';
 import axios from 'axios';
+import {connect} from "react-redux";
+import {createQuizQuestion, finishCreateQuiz} from "../../store/actions/create";
 
 // function validateEmail(email) {
 // 	const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -11,7 +13,7 @@ import axios from 'axios';
 // }
 
 
-export default class Auth extends Component {
+class Auth extends Component {
 	
 	state = {
 		isFormValid: false,
@@ -50,7 +52,7 @@ export default class Auth extends Component {
 			returnSecureToken: true
 		};
 		try {
-			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API KEY]',
+			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBI74Pwe7spiy4vuCcc5Ut7sNanj2s_9Yo',
 				authData);
 			console.log(response.data);
 		} catch (e) {
@@ -65,7 +67,7 @@ export default class Auth extends Component {
 			returnSecureToken: true
 		};
 		try {
-			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API KEY]',
+			const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBI74Pwe7spiy4vuCcc5Ut7sNanj2s_9Yo',
 				authData);
 			console.log(response.data);
 		} catch (e) {
@@ -175,4 +177,11 @@ export default class Auth extends Component {
 }
 
 
+function mapDispatchToProps(dispatch) {
+	return {
+		auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin))
+	}
+}
+
+export default connect(null, mapDispatchToProps)(Auth);
 
