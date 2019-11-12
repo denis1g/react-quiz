@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import AppTest from './test/AppTest';
+// import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 import {compose, createStore, applyMiddleware} from "redux";
 import {Provider} from 'react-redux';
 import rootReducer from "./store/reducers/rootReducer";
 import thunk from "redux-thunk";
+
+import AppTest from './test/AppTest';
+import App from "./hochoc/App";
 //
 // const composeEnhancers =
 // 	typeof window === 'object' &&
@@ -30,6 +32,6 @@ import thunk from "redux-thunk";
 // 	</Provider>
 // );
 
-ReactDOM.render(<AppTest />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 serviceWorker.unregister();
