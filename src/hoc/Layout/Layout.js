@@ -30,7 +30,7 @@ class Layout extends Component {
 				<Drawer
 					isOpen={this.state.menu }
 					onClose={this.menuCloseHandler}
-					isAuthenticated=Q{this.props.isAuthenticated}
+					isAuthenticated={this.props.isAuthenticated}
 				/>
 				
 				<MenuToggle
