@@ -10,7 +10,7 @@ import rootReducer from "./store/reducers/rootReducer";
 import thunk from "redux-thunk";
 
 import AppTest from './test/AppTest';
-import App from "./hochoc/App";
+import FiltredList from "./hochoc/App";
 //
 // const composeEnhancers =
 // 	typeof window === 'object' &&
@@ -32,6 +32,13 @@ import App from "./hochoc/App";
 // 	</Provider>
 // );
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const starWarsChars = [
+	{name: 'Дарт Вэйдер', side: 'dark'},
+	{name: 'Люк Скайвокер', side: 'light'},
+	{name: 'Палпатин', side: 'dark'},
+	{name: 'Обован Кеноби', side: 'light'}
+];
+
+ReactDOM.render(<FiltredList list={starWarsChars} side='dark' />, document.getElementById('root'));
 
 serviceWorker.unregister();
